@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import zipfile
 import os
+import plotly.express as px 
 
 st.set_page_config(layout="wide")
 sns.set(style="whitegrid")
@@ -140,6 +141,7 @@ ax.set_title(f"Ranking Stasiun - {pollutant}")
 plt.xticks(rotation=45)
 
 st.pyplot(fig)
+
 
 
 
