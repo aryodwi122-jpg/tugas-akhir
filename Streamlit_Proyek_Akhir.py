@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import zipfile
 import os
+import request
+import io 
 import plotly.express as px 
 
 st.set_page_config(layout="wide")
@@ -12,19 +14,14 @@ sns.set(style="whitegrid")
 # =====================
 # LOAD DATA
 # =====================
-zip_path = r"C:\Users\aryod\Downloads\Air-quality-dataset.zip"
-extract_dir = r"C:\Users\aryod\Downloads\air_quality_data"
+url = "https://drive.google.com/uc?export=download&id=1qEXlwwNB-L8hfBzK_Jgb2cV9LJaSHAl3"
+response = requests.get(url)
+z = zipfile.zipfile(io.BytesIO(response.content))
 
-with zipfile.ZipFile(zip_path, 'r') as z:
-    z.extractall(extract_dir)
-
-csv_files = []
-for root, dirs, files in os.walk(extract_dir):
-    for file in files:
-        if file.endswith(".csv"):
-            csv_files.append(os.path.join(root, file))
-
-df_list = [pd.read_csv(f) for f in csv_files]
+df_list = []
+for filename in z.namelist():
+    if filename.endswith(".csv"):
+        df_list.append(pd.read_csv)(z.open(filename)))
 df = pd.concat(df_list, ignore_index=True)
 
 # Cleaning
@@ -146,3 +143,4 @@ st.pyplot(fig)
 
 
   
+
