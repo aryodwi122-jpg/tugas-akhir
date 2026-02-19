@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import zipfile
 import os
-import request
+import requests
 import io 
-import plotly.express as px 
+
 
 st.set_page_config(layout="wide")
 sns.set(style="whitegrid")
@@ -16,12 +16,12 @@ sns.set(style="whitegrid")
 # =====================
 url = "https://drive.google.com/uc?export=download&id=1qEXlwwNB-L8hfBzK_Jgb2cV9LJaSHAl3"
 response = requests.get(url)
-z = zipfile.zipfile(io.BytesIO(response.content))
+z = zipfile.ZipFile(io.BytesIO(response.content))
 
 df_list = []
 for filename in z.namelist():
     if filename.endswith(".csv"):
-        df_list.append(pd.read_csv)(z.open(filename)))
+        df_list.append(pd.read_csv(z.open(filename)))
 df = pd.concat(df_list, ignore_index=True)
 
 # Cleaning
@@ -143,4 +143,5 @@ st.pyplot(fig)
 
 
   
+
 
